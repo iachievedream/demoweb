@@ -24,5 +24,6 @@ class UserMenuPermissions extends Model
     protected $fillable = [
         'user_id',
         'menu_small_id',
+        'able',
     ];
 }

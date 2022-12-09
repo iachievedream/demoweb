@@ -19,6 +19,7 @@ class CreateUserMenuPermissionsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('menu_small_id');
             $table->foreign('menu_small_id')->references('id')->on('menu_smalls');
+            $table->integer('able');
             $table->timestamps();
         });
     }
