@@ -53,3 +53,85 @@ git checkout test
 php artisan migrate
 
 php artisan serve --host=0.0.0.0 --port=81
+
+## db
+
+~~~
+php artisan make:migration add_users_table
+users
+---
+profile_photo_path
+address
+self_introduction
+role
+
+php artisan make:migration create_products_table
+產品 products
+---
+type 產品的種類 文章 artical，影片movie，物品object
+name
+content
+original_price
+selling_price
+user_id 作者或擁有者
+time(frequency)
+
+php artisan make:migration create_product_message_boards_table
+產品留言板 product_message_boards
+---
+idproduct_id
+content
+user_id
+
+# php artisan make:migration create_orders_table
+# 訂單 orders
+# ---
+# user_id
+# type(付款方式)
+# third_party_cash_flow_order
+# price
+# address
+# state
+
+### 後臺書籤 menu
+php artisan make:migration create_menus_table
+menu
+---
+title
+menu_permission
+
+php artisan make:migration create_menu_smalls_table
+menu_small
+---
+title
+menu_id
+route
+
+php artisan make:migration create_user_menu_permissions_table
+user_menu_permissions
+---
+user_id
+menu_small_id
+able
+
+~~~
+## seed
+
+新增檔案
+php artisan make:seeder MenuSeeder
+執行檔案
+php artisan db:seed --class=MenuSeeder
+
+## model
+php artisan make:model Product
+php artisan make:model ProductMessageBoards
+php artisan make:model Menu
+php artisan make:model MenuSmall
+php artisan make:model UserMenuPermissions
+
+## seed
+php artisan make:seeder UserSeeder
+php artisan db:seed --class=UserSeeder
+
+php artisan make:seeder ProductSeeder
+php artisan db:seed --class=ProductSeeder
