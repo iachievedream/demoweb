@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BackStage\BackstageController;
 use App\Http\Controllers\BackStage\UserController;
 
@@ -15,9 +16,9 @@ use App\Http\Controllers\BackStage\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -28,6 +29,11 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/replies', \App\Http\Livewire\Replies::class)->name('Replies');
+
+Route::get('/product', \App\Http\Livewire\Product\Index::class)->name('product');
 
 Route::prefix('backstage')->group(function () {
     Route::get('/', [BackstageController::class, 'index'])->name('backstage/index');

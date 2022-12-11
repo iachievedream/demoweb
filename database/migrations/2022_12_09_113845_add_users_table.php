@@ -14,8 +14,8 @@ class AddUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('address')->nullable();
-            $table->string('self_introduction');
+            $table->string('address')->default('address');
+            $table->string('self_introduction')->default('self_introduction');
             $table->integer('role')->default('0');
             $table->softDeletes();
         });

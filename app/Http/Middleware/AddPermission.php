@@ -29,7 +29,7 @@ class AddPermission
             $small_menus = MenuSmall::select('id', 'title', 'menu_id')
                 ->get();
             foreach ($small_menus as $small_menu) {
-                if (isset($able)) {
+                if (empty(json_decode($able))) {//大括號的json解析方式後，才能判斷array是否為空，未解析無法判斷array是否有值
                     UserMenuPermissions::create([
                         'user_id' => $id,
                         'menu_small_id' => $small_menu->id,
