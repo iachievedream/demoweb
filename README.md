@@ -146,3 +146,16 @@ php artisan make:livewire replies
 [不寫 JavaScript，就讓網站變成 SPA！Laravel Livewire 初體驗（上）](https://docfunc.com/posts/35/%E4%B8%8D%E5%AF%AB-javascript%E5%B0%B1%E8%AE%93%E7%B6%B2%E7%AB%99%E8%AE%8A%E6%88%90-spalaravel-livewire-%E5%88%9D%E9%AB%94%E9%A9%97%E4%B8%8A-post)
 
 php artisan make:livewire product/index
+
+## factory
+php artisan make:factory ProductFactory
+
+### Q.
+Object of class Faker\UniqueGenerator could not be converted to string
+
+A.
+[Object of class Faker\UniqueGenerator could not be converted to string](https://stackoverflow.com/questions/73775777/object-of-class-faker-uniquegenerator-could-not-be-converted-to-string)
+
+'username' => fake()->unique(),
+rename to
+'username' => fake()->unique()->text(16),
