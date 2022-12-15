@@ -170,10 +170,21 @@ Laravel Framework 8.83.27
 
 [L5 Swagger](https://github.com/DarkaOnLine/L5-Swagger)
 
+~~~
 composer require "darkaonline/l5-swagger"
-
 php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+php artisan l5-swagger:generate
+~~~
 
 http://127.0.0.1:81/api/documentation
 
-php artisan l5-swagger:generate
+
+參考資料:
+
+[Laravel 使用l5-swagger製作API文件 — 安裝＆設定篇](https://dtl625.medium.com/laravel-%E4%BD%BF%E7%94%A8l5-swagger%E8%A3%BD%E4%BD%9Capi%E6%96%87%E4%BB%B6-%E5%AE%89%E8%A3%9D-%E8%A8%AD%E5%AE%9A%E7%AF%87-241d751e079)
+
+開啟 config/l5-swagger.php, 並調整為true
+'generate_always' => env('L5_SWAGGER_GENERATE_ALWAYS', false),
+
+
+[#1 - Laravel 9 - L5 Swagger Installation](https://www.youtube.com/watch?v=sODdVdIk90c)

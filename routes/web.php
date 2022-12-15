@@ -35,6 +35,8 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/replies', \App\Http\Livewire\Replies::class)->name('Replies');
 
 Route::get('/product', \App\Http\Livewire\Product\Index::class)->name('product');
+// Route::get('/shopping/itemList', \App\Http\Livewire\Shopping\ItemList::class)->name('product');
+// Route::get('/shopping/index', \App\Http\Livewire\Shopping\Index::class)->name('product');
 
 Route::prefix('backstage')->group(function () {
     Route::get('/', [BackstageController::class, 'index'])->name('backstage/index');
