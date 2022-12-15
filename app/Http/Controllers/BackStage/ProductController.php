@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\CommonService;
-use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class ProductController extends Controller
 {
     protected $commonService;
 
@@ -55,13 +55,13 @@ class UserController extends Controller
             'field' => [
                 '編號',//下列後則是table的欄位敘述
                 '會員名稱',
-                'Email',
-                '自我介紹',
-                '權限',
-                // '腳色',
-                // '登入方式',
+                '種類',
+                '內容',
+                '原價',
+                '售價',
+                '作者',
+                '觀看次數',
                 '註冊時間',
-                // '觀看次數',
             ],
             'note' => [//表格後方欄位
                 '編輯',
@@ -71,7 +71,7 @@ class UserController extends Controller
             ],
         ];
 
-        $user = User::all();
+        $user = Product::all();
             // where('P_EDate', '>=', Carbon::now())
             // ->orderBy('P_id', 'desc')
             // ->get();
@@ -80,9 +80,12 @@ class UserController extends Controller
             $totalss = [];
             $totalss[] = $v1->id;
             $totalss[] = $v1->name;//連結的主id
-            $totalss[] = $v1->email;
-            $totalss[] = $v1->self_introduction;
-            $totalss[] = $v1->role;
+            $totalss[] = $v1->type;
+            $totalss[] = $v1->content;
+            $totalss[] = $v1->original_price;
+            $totalss[] = $v1->selling_price;
+            $totalss[] = $v1->user_id;
+            $totalss[] = $v1->times;
             $totalss[] = substr($v1->created_at,0,10);
             foreach ($totalss as $k2 => $v2) {
                 $totals['table']['content'][$k1][$k2] = $v2;
@@ -173,7 +176,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $user= User::create([
+        $user= Product::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -196,7 +199,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::where('id',$id)
+        $user = Product::where('id',$id)
             ->get();
             
         return view('back_stage.index')
@@ -218,7 +221,7 @@ class UserController extends Controller
             'title_url' => 'user/update',
         ];
         
-        $user = User::where('id', $id)
+        $user = Product::where('id', $id)
             // ->orderBy('P_id', 'desc')
             ->first();
         // dd($user);
@@ -290,7 +293,7 @@ class UserController extends Controller
     {
         $data = $request->all();
         // dd($data);
-        $user= User::where('id', $id)->update([
+        $user= Product::where('id', $id)->update([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' =>  Hash::make($data['password']),
@@ -313,7 +316,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::where('id',$id)
+        $user = Product::where('id',$id)
             ->delete();
         if($user) {
             return redirect('backstage/user')->with('message', '此會員:' . $id . ' 刪除錯誤');
@@ -324,7 +327,7 @@ class UserController extends Controller
 
     // public function front_back_separation()
     // {
-    //     $total = User::all();
+    //     $total = Product::all();
     //     echo json_encode($total);
     // }
 }

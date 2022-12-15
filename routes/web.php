@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BackStage\BackstageController;
 use App\Http\Controllers\BackStage\UserController;
+use App\Http\Controllers\BackStage\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,13 +48,13 @@ Route::prefix('backstage')->group(function () {
         Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('user_destroy');
     });
     Route::prefix('/product')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('product');
-        Route::get('/create', [UserController::class, 'create'])->name('product_create');
-        Route::post('/store', [UserController::class, 'store'])->name('product_store');
-        Route::get('/show/{id}', [UserController::class, 'show'])->name('product_show');
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('product_edit');
-        Route::post('/update/{id}', [UserController::class, 'update'])->name('product_update');
-        Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('product_destroy');
+        Route::get('/', [ProductController::class, 'index'])->name('product');
+        Route::get('/create', [ProductController::class, 'create'])->name('product_create');
+        Route::post('/store', [ProductController::class, 'store'])->name('product_store');
+        Route::get('/show/{id}', [ProductController::class, 'show'])->name('product_show');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product_edit');
+        Route::post('/update/{id}', [ProductController::class, 'update'])->name('product_update');
+        Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('product_destroy');
     });
     Route::prefix('/order')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('order');

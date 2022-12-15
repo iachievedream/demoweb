@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
     {
         // php artisan db:seed
         
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
         $this->call(UserSeeder::class);
-        // $this->call(MenuSeeder::class);
+        $this->call(MenuSeeder::class);
         $this->call(ProductSeeder::class);
 
         \App\Models\Product::factory(10)->create();

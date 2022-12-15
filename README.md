@@ -74,7 +74,7 @@ content
 original_price
 selling_price
 user_id 作者或擁有者
-time(frequency)
+times(frequency)
 
 php artisan make:migration create_product_message_boards_table
 產品留言板 product_message_boards
@@ -159,3 +159,21 @@ A.
 'username' => fake()->unique(),
 rename to
 'username' => fake()->unique()->text(16),
+
+## 
+
+php artisan make:livewire Shopping/ItemList
+
+## swagger
+php artisan --version
+Laravel Framework 8.83.27
+
+[L5 Swagger](https://github.com/DarkaOnLine/L5-Swagger)
+
+composer require "darkaonline/l5-swagger"
+
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+
+http://127.0.0.1:81/api/documentation
+
+php artisan l5-swagger:generate

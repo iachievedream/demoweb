@@ -14,8 +14,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         // return view('back_stage.home');
-        return view('web.home');
+        // return view('web.home');
         // return view('dashboard');
-        // return view('welcome');
+        return view('welcome');
     } 
 }

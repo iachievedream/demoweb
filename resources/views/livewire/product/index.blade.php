@@ -1,16 +1,19 @@
-<div class="pt-3 md:pt-8 pb-6 bg-white">
-    <div class="mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8"> 
-        <div class="heading">
-            商品列表
+<div class="flex flex-col shadow-lg overflow-hidden transition duration-500 transform hover:-translate-y-1 hover:scale-10">
+@foreach($products as $product)
+{{$product->name}}
+    <div class="flex-1 bg-white p-4 flex flex-col justify-between">
+        <div class="flex-1"> 
+        <p class="text-sky-500 display-3 mb-3">{{$product->time}}</p>
+    </div>
+    <div>
+        <div class="flex justify-between items-center">
+            <div>
+                購買
+            </div>
         </div>
-		<div class="container">
-		<div class="flex items-stretch ">
-			@foreach ($products as $product)
-				<!-- <div class="py-12 content-center"> -->
-				<div class="h-56 grid grid-cols-3 gap-4 content-start ...">
-					@include('web.includes.product', $product)
-				</div>
-			@endforeach
-		</div>
-	</div>	
+        <div class="mx-2 mt-2 grid lg:grid-cols-6 sm:grid-cols-4 gap-3">
+            
+        </div>
+    </div>
+    @endforeach
 </div>
