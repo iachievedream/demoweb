@@ -188,3 +188,7 @@ http://127.0.0.1:81/api/documentation
 
 
 [#1 - Laravel 9 - L5 Swagger Installation](https://www.youtube.com/watch?v=sODdVdIk90c)
+
+
+### Q.Laravel常見錯誤問題Specified key was too long
+[Laravel常見錯誤問題Specified key was too long](https://blog.vvtitan.com/2019/05/laravel%E5%B8%B8%E8%A6%8B%E9%8C%AF%E8%AA%A4%E5%95%8F%E9%A1%8Cspecified-key-was-too-long/)
