@@ -22,8 +22,8 @@ class CreateProductsTable extends Migration
             $table->integer('selling_price')->default('0');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('times');
-            $table->integer('time_limit');
+            $table->integer('times')->default('0');
+            $table->integer('time_limit')->default('30');
             $table->timestamps();
             $table->softDeletes();
         });

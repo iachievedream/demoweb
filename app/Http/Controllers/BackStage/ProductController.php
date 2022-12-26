@@ -41,7 +41,7 @@ class ProductController extends Controller
         $totals = [];
         $totals['page_information'] = [
             'title' => '課程',
-            'title_url' => 'user',
+            'title_url' => 'product',
             // 'search' =>  [
             // 	'0' => '姓名：',
             // 	'1' => '信箱：',
@@ -67,16 +67,16 @@ class ProductController extends Controller
                 '編輯',
             ],
             'note_url' => [//表格後方欄位
-                'user/edit',//url
+                'product/edit',//url
             ],
         ];
 
-        $user = Product::all();
+        $product = Product::all();
             // where('P_EDate', '>=', Carbon::now())
             // ->orderBy('P_id', 'desc')
             // ->get();
         // dd($total);
-        foreach ($user as $k1 => $v1) {
+        foreach ($product as $k1 => $v1) {
             $totalss = [];
             $totalss[] = $v1->id;
             $totalss[] = $v1->name;//連結的主id
@@ -107,60 +107,54 @@ class ProductController extends Controller
     {
         $menu = $this->commonService->menu();
         $totals['page_information'] = [
-            'title' => '會員新增',
-            'title_url' => 'user/store',
+            'title' => '產品新增',
+            'title_url' => 'product/store',
         ];
         
         $totals['table'][] = [
-            'front_text' => '姓名',
+            'front_text' => '產品名稱',
             'name_type' => 'text',
             'name' => 'name',
             'value' => 'name',
         ];
         $totals['table'][] = [
-            'front_text' => '信箱',
-            'name_type' => 'text',
-            'name' => 'email',
-            'value' => 'example@gmail.email.com',
-        ];
-        $totals['table'][] = [
-            'front_text' => '密碼',
-            'name_type' => 'password',
-            'name' => 'password',
-            'value' => '123456789',
-        ];
-        $totals['table'][] = [
-            'front_text' => '自我介紹',
-            'name_type' => 'textarea',
-            'name' => 'self_introduction',
-            'value' => 'self_introduction',
-        ];
-        // $totals['table'][] = [
-        //     'front_text' => '大頭貼',
-        //     'name_type' => 'image',
-        //     'name' => 'self_img',
-        //     'value' => '',
-        // ];
-        $totals['table'][] = [
-            'front_text' => '權限',
+            'front_text' => '種類',
             'name_type' => 'select',
-            'name' => 'role',
+            'name' => 'type',
             'value' => [
                 [
-                    'value' => '4',
-                    'value_text' => '訪客',
-                ],[
-                    'value' => '3',
-                    'value_text' => '會員',
-                ],[
                     'value' => '2',
-                    'value_text' => '作者',
+                    'value_text' => '文章',
                 ],[
                     'value' => '1',
-                    'value_text' => '管理員',
+                    'value_text' => '課程',
                 ],
             ],
             'selected'=> '4',
+        ];
+        $totals['table'][] = [
+            'front_text' => '產品內容',
+            'name_type' => 'textarea',
+            'name' => 'content',
+            'value' => 'content',
+        ];        
+        $totals['table'][] = [
+            'front_text' => '原價',
+            'name_type' => 'text',
+            'name' => 'original_price',
+            'value' => '500',
+        ];
+        $totals['table'][] = [
+            'front_text' => '售價',
+            'name_type' => 'text',
+            'name' => 'selling_price',
+            'value' => '400',
+        ];
+        $totals['table'][] = [
+            'front_text' => '觀看期限(天)',
+            'name_type' => 'text',
+            'name' => 'time_limit',
+            'value' => '60',
         ];
         return view('back_stage.create')
             ->with('contents', $totals)
@@ -176,18 +170,22 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $user= Product::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'self_introduction' => $data['self_introduction'],
-            'role' => $data['role'],
+        // dd($data['name']);
+        $product= Product::create([
+            'type'           => $data['type'],
+            'name'           => $data['name'],
+            'content'        => $data['content'],
+            'original_price' => $data['original_price'],
+            'selling_price'  => $data['selling_price'],
+            'user_id'        => Auth::user()->id,
+            'times'          => 0,
+            'time_limit'     => $data['time_limit'],
         ]);
 
-        if($user) {
-            return redirect('backstage/user')->with('message', '此會員:' . $request->id . ' 新增錯誤');
+        if($product) {
+            return redirect('backstage/product')->with('message', '此會員:' . $request->id . ' 新增錯誤');
         } else {
-            return redirect('backstage/user');
+            return redirect('backstage/product');
         }
     }
 
@@ -199,7 +197,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $user = Product::where('id',$id)
+        $product = Product::where('id',$id)
             ->get();
             
         return view('back_stage.index')
@@ -217,64 +215,64 @@ class ProductController extends Controller
     {
         $menu = $this->commonService->menu();
         $totals['page_information'] = [
-            'title' => '會員編輯',
-            'title_url' => 'user/update',
+            'title' => '產品編輯',
+            'title_url' => 'product/update',
         ];
         
-        $user = Product::where('id', $id)
+        $product = Product::where('id', $id)
             // ->orderBy('P_id', 'desc')
             ->first();
-        // dd($user);
+        // dd($product);
         $totals['table'][] = [
-            'front_text' => '會員編號',
-            'name_type' => 'text',
-            'name' => 'id',
-            'value' => $user->id,
-        ];
-        $totals['table'][] = [
-            'front_text' => '姓名',
+            'front_text' => '產品名稱',
             'name_type' => 'text',
             'name' => 'name',
-            'value' => $user->name,
+            'value' => $product->name,
         ];
         $totals['table'][] = [
-            'front_text' => '信箱',
-            'name_type' => 'text',
-            'name' => 'email',
-            'value' => $user->email,
-        ];
-        $totals['table'][] = [
-            'front_text' => '密碼',
-            'name_type' => 'password',
-            'name' => 'password',
-            'value' => $user->password,
-        ];
-        $totals['table'][] = [
-            'front_text' => '自我介紹',
-            'name_type' => 'textarea',
-            'name' => 'self_introduction',
-            'value' => $user->self_introduction,
-        ];
-        $totals['table'][] = [
-            'front_text' => '權限',
+            'front_text' => '種類',
             'name_type' => 'select',
-            'name' => 'role',
+            'name' => 'type',
             'value' => [
                 [
-                    'value' => '4',
-                    'value_text' => '訪客',
-                ],[
-                    'value' => '3',
-                    'value_text' => '會員',
-                ],[
                     'value' => '2',
-                    'value_text' => '作者',
+                    'value_text' => '文章',
                 ],[
                     'value' => '1',
-                    'value_text' => '管理員',
+                    'value_text' => '課程',
                 ],
             ],
-            'selected'=> '4',
+            'selected'=> '2',
+        ];
+        $totals['table'][] = [
+            'front_text' => '產品內容',
+            'name_type' => 'textarea',
+            'name' => 'content',
+            'value' => $product->content,
+        ];
+        $totals['table'][] = [
+            'front_text' => '原價',
+            'name_type' => 'text',
+            'name' => 'original_price',
+            'value' => $product->original_price,
+        ];
+        $totals['table'][] = [
+            'front_text' => '售價',
+            'name_type' => 'text',
+            'name' => 'selling_price',
+            'value' => $product->selling_price,
+        ];
+        $totals['table'][] = [
+            'front_text' => '觀看次數',
+            'name_type' => 'text',
+            'name' => 'times',
+            'value' => $product->times,
+        ];
+        $totals['table'][] = [
+            'front_text' => '觀看期限',
+            'name_type' => 'text',
+            'name' => 'time_limit',
+            'value' => $product->time_limit,
         ];
         return view('back_stage.create')
             ->with('id', $id)
@@ -293,18 +291,20 @@ class ProductController extends Controller
     {
         $data = $request->all();
         // dd($data);
-        $user= Product::where('id', $id)->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' =>  Hash::make($data['password']),
-            'self_introduction' => $data['self_introduction'],
-            'role' => $data['role'],
+        $product= Product::where('id', $id)->update([
+            'type'           => $data['type'],
+            'name'           => $data['name'],
+            'content'        => $data['content'],
+            'original_price' => $data['original_price'],
+            'selling_price'  => $data['selling_price'],
+            'times'          => $data['times'],
+            'time_limit'     => $data['time_limit'],
         ]);
         
-        if($user) {
-            return redirect('backstage/user')->with('message', '此會員:' . $request->id . ' 新增錯誤');
+        if($product) {
+            return redirect('backstage/product')->with('message', '此產品:' . $request->id . ' 新增錯誤');
         } else {
-            return redirect('backstage/user');
+            return redirect('backstage/product');
         }
     }
 
@@ -316,12 +316,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $user = Product::where('id',$id)
+        $product = Product::where('id',$id)
             ->delete();
-        if($user) {
-            return redirect('backstage/user')->with('message', '此會員:' . $id . ' 刪除錯誤');
+        if($product) {
+            return redirect('backstage/product')->with('message', '此產品:' . $id . ' 刪除錯誤');
         } else {
-            return redirect('backstage/user');
+            return redirect('backstage/product');
         }
     }
 
